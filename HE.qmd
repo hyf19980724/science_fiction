@@ -92,3 +92,15 @@ ggplot(data_clean, aes(x = radius, y = `Relative Density`)) +
   labs(x = "Radius (in Earth units)", y = "Relative Density (in Earth units)", 
        title = "Density of Planets as a Function of Their Radius")
 ```
+
+### Question 6:
+
+```{r}
+densest_planet <- data[which.max(data$`Relative Density`), c('p_name', 'Relative Density')]
+least_dense_planet <- data[which.min(data$`Relative Density`), c('p_name', 'Relative Density')]
+extreme_planets <- data.frame(
+  Description = c("Densest Planet", "Least Dense Planet"),
+  Planet_Name = c(densest_planet$p_name, least_dense_planet$p_name),
+  Value = c(densest_planet$`Relative Density`, least_dense_planet$`Relative Density`))
+kable(extreme_planets, format = "markdown", col.names = c("Description", "Planet Name", "Value"))
+```
