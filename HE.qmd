@@ -150,10 +150,28 @@ mass_climate_data <- data %>%
 mass_climate_data <- mass_climate_data %>% 
   filter(!is.na(Mass) & !is.na(Type_climate))
 
-# Plot the distribution of mass for each climate
 ggplot(mass_climate_data, aes(x = Mass, fill = Type_climate)) +
   geom_histogram(position = "dodge", binwidth = 0.5) +
   facet_wrap(~Type_climate, scales = "free") +
   labs(x = "Mass ", y = "Count", 
        title = "Distribution of Planet Mass by Climate Type")
+```
+
+### Question 10:
+
+```{r}
+here::i_am("science_fiction.Rproj")
+star_data <- vroom(here("Data%stars.csv"))
+```
+
+### Question 11:
+
+```{r}
+non_matching_planets <- anti_join(data, star_data, by = c("STAR_KEY" = "STAR_KEY"))
+non_matching_planet_names <- non_matching_planets$p_name
+unmatched_stars_count <- sum(!star_data$STAR_KEY %in% data$STAR_KEY)
+
+cat("Planets with non-matching STAR_KEY:\n", paste(non_matching_planet_names, collapse = ", "), "\n")
+cat("Number of stars with no associated planet:", unmatched_stars_count, "\n")
+
 ```
