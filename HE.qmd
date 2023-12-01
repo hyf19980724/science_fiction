@@ -56,8 +56,6 @@ if(all(sapply(data[numerical_vars], is.numeric))) {
 ### Question 4:
 
 ```{r}
-library(readr)
-data <- read_csv("THE_PLANETS.csv", na = "na")
 num_observations <- nrow(data)
 num_variables <- ncol(data)
 missing_values_per_variable <- sapply(data, function(x) sum(is.na(x)))
@@ -79,4 +77,18 @@ table_data <- data.frame(
 
 # Display the table using kable
 kable(table_data, format = "markdown", col.names = c("Metric", "Value"))
+```
+
+### Question 5:
+
+```{r}
+data_clean <- data %>% 
+  filter(!is.na(radius) & !is.na(`Relative Density`))
+```
+
+```{r}
+ggplot(data_clean, aes(x = radius, y = `Relative Density`)) +
+  geom_point() +
+  labs(x = "Radius (in Earth units)", y = "Relative Density (in Earth units)", 
+       title = "Density of Planets as a Function of Their Radius")
 ```
