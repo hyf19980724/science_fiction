@@ -139,3 +139,21 @@ ggplot(num_terrains_per_planet, aes(x = Num_Terrain_Types)) +
   geom_histogram(binwidth = 1, fill="pink", color="black") +
   labs(title = "Distribution of Number of Terrains per Planet", x = "Number of Terrains", y = "Number of Planets")
 ```
+
+### Question 9:
+
+```{r}
+mass_climate_data <- data %>%
+  select(Planet_number, Mass) %>%
+  inner_join(climate_data, by = "Planet_number")
+
+mass_climate_data <- mass_climate_data %>% 
+  filter(!is.na(Mass) & !is.na(Type_climate))
+
+# Plot the distribution of mass for each climate
+ggplot(mass_climate_data, aes(x = Mass, fill = Type_climate)) +
+  geom_histogram(position = "dodge", binwidth = 0.5) +
+  facet_wrap(~Type_climate, scales = "free") +
+  labs(x = "Mass ", y = "Count", 
+       title = "Distribution of Planet Mass by Climate Type")
+```
