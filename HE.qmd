@@ -5,4 +5,24 @@ format: html
 editor: visual
 ---
 
-## 
+### Question 2:
+
+A link to my github repository: <https://github.com/hyf19980724/science_fiction.git>
+
+### Question 3:
+
+```{r}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+```{r}
+library(here)
+library(vroom)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+here::i_am("science_fiction.Rproj")
+grades <- vroom(here("THE_PLANETS.csv"))
+```
