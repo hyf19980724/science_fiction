@@ -175,3 +175,31 @@ cat("Planets with non-matching STAR_KEY:\n", paste(non_matching_planet_names, co
 cat("Number of stars with no associated planet:", unmatched_stars_count, "\n")
 
 ```
+
+### Question 12
+
+```{r}
+star_data_split <- star_data %>%
+  mutate(
+    Temperature_Class = str_extract(`STAR TYPE`, "^[A-Z]"),
+    Magnitude = as.numeric(str_extract(`STAR TYPE`, "\\d")),
+    Luminosity_Class = str_extract(`STAR TYPE`, "[IVX]+$"))
+```
+
+### Question 13:
+
+```{r}
+ggplot(star_data_split, aes(x = Temperature_Class)) +
+  geom_bar() +
+  labs(x = "Temperature Class", y = "Number of Stars", 
+       title = "Distribution of Stars by Temperature Class")
+```
+
+### Question 14:
+
+```{r}
+ggplot(star_data_split, aes(x = Temperature_Class, fill = as.factor(Magnitude))) +
+  geom_bar(position = "dodge") +
+  labs(x = "Temperature Class", y = "Number of Stars", fill = "Magnitude",
+       title = "Distribution of Stars by Temperature Class and Magnitude")
+```
