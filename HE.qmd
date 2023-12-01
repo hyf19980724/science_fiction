@@ -23,6 +23,7 @@ library(vroom)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(knitr)
 here::i_am("science_fiction.Rproj")
 data <- vroom(here("THE_PLANETS.csv"))
 ```
@@ -50,4 +51,32 @@ if(all(sapply(data[numerical_vars], is.numeric))) {
   message("There is an issue with the recognition of numerical variables.")
 }
 
+```
+
+### Question 4:
+
+```{r}
+library(readr)
+data <- read_csv("THE_PLANETS.csv", na = "na")
+num_observations <- nrow(data)
+num_variables <- ncol(data)
+missing_values_per_variable <- sapply(data, function(x) sum(is.na(x)))
+observations_with_missing <- sum(!complete.cases(data))
+
+# Creating a data frame for the table
+table_data <- data.frame(
+  Metric = c("Number of Observations", 
+             "Number of Variables", 
+             "Missing Values per Variable", 
+             "Observations with at Least One Missing Value"),
+  Value = I(list(
+    num_observations, 
+    num_variables, 
+    missing_values_per_variable, 
+    observations_with_missing
+  ))
+)
+
+# Display the table using kable
+kable(table_data, format = "markdown", col.names = c("Metric", "Value"))
 ```
