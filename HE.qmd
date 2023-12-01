@@ -24,5 +24,30 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 here::i_am("science_fiction.Rproj")
-grades <- vroom(here("THE_PLANETS.csv"))
+data <- vroom(here("THE_PLANETS.csv"))
+```
+
+```{r}
+
+# Check the number of planets and variables
+expected_planets <- 789
+actual_planets <- nrow(data)
+expected_variables <- 8
+actual_variables <- ncol(data)
+
+# Output message based on data validity
+if (actual_planets == expected_planets && actual_variables == expected_variables) {
+  message("Data loaded successfully with the correct number of planets and variables.")
+} else {
+  message("Data loading issue: Number of planets or variables does not match expectations.")
+}
+
+# Check for numerical variables
+numerical_vars <- c("Mass", "radius", "Relative Density")
+if(all(sapply(data[numerical_vars], is.numeric))) {
+  message("All numerical variables are correctly recognized.")
+} else {
+  message("There is an issue with the recognition of numerical variables.")
+}
+
 ```
