@@ -104,3 +104,38 @@ extreme_planets <- data.frame(
   Value = c(densest_planet$`Relative Density`, least_dense_planet$`Relative Density`))
 kable(extreme_planets, format = "markdown", col.names = c("Description", "Planet Name", "Value"))
 ```
+
+### Question 7:
+
+```{r}
+
+library(stringr)
+library(tidyr)
+
+terrain_data <- data %>%
+  select(Planet_number, `TERRAIN TYPE`) %>%
+  mutate(`TERRAIN TYPE` = str_split(`TERRAIN TYPE`, pattern = ";")) %>%
+  unnest(`TERRAIN TYPE`)
+
+climate_data <- data %>%
+  select(Planet_number, Type_climate) %>%
+  mutate(Type_climate = str_split(Type_climate, pattern = ";")) %>%
+  unnest(Type_climate)
+```
+
+### Question 8: 
+
+```{r}
+num_climates_per_planet <- climate_data %>% group_by(Planet_number) %>% summarize(Num_Climate_Types = n())
+num_terrains_per_planet <- terrain_data %>% group_by(Planet_number) %>% summarize(Num_Terrain_Types = n())
+
+# Plot for climates
+ggplot(num_climates_per_planet, aes(x = Num_Climate_Types)) +
+  geom_histogram(binwidth = 1, fill="blue", color="black") +
+  labs(title = "Distribution of Number of Climates per Planet", x = "Number of Climates", y = "Number of Planets")
+
+# Plot for terrains
+ggplot(num_terrains_per_planet, aes(x = Num_Terrain_Types)) +
+  geom_histogram(binwidth = 1, fill="pink", color="black") +
+  labs(title = "Distribution of Number of Terrains per Planet", x = "Number of Terrains", y = "Number of Planets")
+```
